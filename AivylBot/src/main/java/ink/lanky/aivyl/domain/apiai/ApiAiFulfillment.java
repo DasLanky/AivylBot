@@ -13,11 +13,31 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package ink.lanky.aivyl.service;
+package ink.lanky.aivyl.domain.apiai;
 
-import org.springframework.stereotype.Service;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import java.util.List;
 
-@Service
-public class AivylAPIService {
+@JsonIgnoreProperties(ignoreUnknown = true)
+class ApiAiFulfillment {
+    private String speech;
+    private List<ApiAiMessage> messages;
+
+    public String getSpeech() {
+        return speech;
+    }
+
+    public void setSpeech(String speech) {
+        this.speech = speech;
+    }
+
+    public List<ApiAiMessage> getMessages() {
+        return messages;
+    }
+
+    public void setMessages(List<ApiAiMessage> messages) {
+        this.messages = messages;
+    }
+    
     
 }
