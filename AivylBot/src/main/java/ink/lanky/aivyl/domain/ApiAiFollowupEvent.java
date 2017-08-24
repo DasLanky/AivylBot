@@ -15,10 +15,27 @@
  */
 package ink.lanky.aivyl.domain;
 
-/**
- *
- * @author Gcube
- */
-public class Response {
-    
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import java.util.HashMap;
+
+@JsonIgnoreProperties(ignoreUnknown = true)
+public class ApiAiFollowupEvent {
+    private String name;
+    private HashMap<String, Object> data;
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public HashMap<String, Object> getData() {
+        return data;
+    }
+
+    public void setData(HashMap<String, Object> data) {
+        this.data = data;
+    }
 }

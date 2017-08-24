@@ -15,7 +15,7 @@
  */
 package ink.lanky.aivyl.controller;
 
-import ink.lanky.aivyl.domain.Response;
+import ink.lanky.aivyl.domain.ApiAiResponse;
 import java.util.HashMap;
 
 /**
@@ -33,5 +33,5 @@ public abstract class Action {
         return actionMap;
     }
     
-    public abstract Response execute(String sessionId, HashMap<String, Object> args);
+    public abstract ApiAiResponse execute(String sessionId, HashMap<String, Object> args);
 }

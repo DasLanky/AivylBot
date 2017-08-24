@@ -17,7 +17,7 @@ package rest;
 
 import ink.lanky.aivyl.config.AivylConfiguration;
 import ink.lanky.aivyl.controller.Action;
-import ink.lanky.aivyl.domain.Response;
+import ink.lanky.aivyl.domain.ApiAiResponse;
 import ink.lanky.aivyl.domain.apiai.ApiAiPostBody;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -42,7 +42,7 @@ public class AivylAPIResource {
             method = RequestMethod.POST,
             produces = MediaType.APPLICATION_JSON_VALUE
     )
-    public ResponseEntity<Response> handleApiAiRequest(
+    public ResponseEntity<ApiAiResponse> handleApiAiRequest(
             @RequestBody ApiAiPostBody body) {
         if (body.getResult().isActionIncomplete()) {
             return ResponseEntity.ok(null);
