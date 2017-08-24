@@ -74,4 +74,8 @@ public class PluginConfiguration {
     public void setProperties(HashMap<String, String> properties) {
         this.properties = properties;
     }
+    
+    public String getProperty(String name) {
+        return properties.get(name);
+    }
 }

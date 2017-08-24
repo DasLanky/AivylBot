@@ -26,17 +26,22 @@ public class WeatherAuthenticator extends Authenticator {
 
     @Override
     public Properties getAuthHeaders() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        return new Properties();
     }
 
     @Override
     public Properties getAuthParams() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        Properties params = new Properties();
+        params.setProperty("APIKEY",
+                            config
+                                .getPluginConfiguration("weather")
+                                .getProperty("APIKEY"));
+        return params;
     }
 
     @Override
     public void reset() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        //No action
     }
     
 }

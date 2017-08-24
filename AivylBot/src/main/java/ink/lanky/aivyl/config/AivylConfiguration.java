@@ -47,4 +47,8 @@ public class AivylConfiguration {
     public void setProperties(AivylProperties properties) {
         this.properties = properties;
     }
+    
+    public PluginConfiguration getPluginConfiguration(String name) {
+        return plugins.get(name);
+    }
 }
