@@ -34,6 +34,8 @@ public class WeatherAction extends Action {
         
         response.setSource("Aivyl (OpenWeatherMap Plugin)");
         response.setSpeech("Here's the weather in " + args.get("geo-city") + ".");
+        //TODO: Actually implement
+        //Remember to cache weather data for 10 minutes or longer per city!
         response.setDisplayText("Placeholder: weather in " 
                                     + args.get("geo-city")
                                     + ", date is "
