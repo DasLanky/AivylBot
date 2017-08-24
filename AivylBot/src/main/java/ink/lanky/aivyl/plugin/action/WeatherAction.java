@@ -30,7 +30,17 @@ public class WeatherAction extends Action {
 
     @Override
     public ApiAiResponse execute(String sessionId, HashMap<String, Object> args) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        ApiAiResponse response = new ApiAiResponse();
+        
+        response.setSource("Aivyl (OpenWeatherMap Plugin)");
+        response.setSpeech("Here's the weather in " + args.get("geo-city") + ".");
+        response.setDisplayText("Placeholder: weather in " 
+                                    + args.get("geo-city")
+                                    + ", date is "
+                                    + args.get("date"));
+        response.setFollowupEvent(null);
+        response.setData(null);
+        return response;
     }
 
     public APIConnection getWeatherAPIConnection() {

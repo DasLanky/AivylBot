@@ -47,10 +47,17 @@ public class AivylAPIResource {
         if (body.getResult().isActionIncomplete()) {
             return ResponseEntity.ok(null);
         }
-        String intentName = body.getResult().getMetadata().getIntentName();
         String actionName = body.getResult().getAction();
-        Action action = config.getPluginConfiguration(intentName)
+        Action action;
+        if (actionName.contains(".")) {
+            action = config.getPluginConfiguration(
+                                    actionName.substring(0, actionName.indexOf('.')))
                                 .getAction(actionName);
+        }
+        else {
+            action = config.getPluginConfiguration(actionName)
+                                    .getAction(actionName);
+        }
         return ResponseEntity.ok(
                 action.execute(
                         body.getSessionId(),

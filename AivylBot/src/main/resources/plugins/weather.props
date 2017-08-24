@@ -1,3 +1,3 @@
 APIKEY = 6d4f0f00d62497cbecb0a758d98ca516
 actions
-action.plugin.weather = ink.lanky.aivyl.plugin.action.WeatherAction
+weather.forecast = ink.lanky.aivyl.plugin.action.WeatherAction
