@@ -16,10 +16,11 @@
 package ink.lanky.aivyl.domain.apiai;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import java.util.HashMap;
 import java.util.List;
 
 @JsonIgnoreProperties(ignoreUnknown = true)
-class ApiAiResult {
+public class ApiAiResult {
     private String source;
     private String resolvedQuery;
     private String action;
@@ -27,5 +28,78 @@ class ApiAiResult {
     private List<ApiAiContext> contexts;
     private ApiAiMetadata metadata;
     private ApiAiFulfillment fulfillment;
+    private HashMap<String, Object> parameters;
     private double score;
+
+    public HashMap<String, Object> getParameters() {
+        return parameters;
+    }
+
+    public void setParameters(HashMap<String, Object> parameters) {
+        this.parameters = parameters;
+    }
+
+    public String getSource() {
+        return source;
+    }
+
+    public void setSource(String source) {
+        this.source = source;
+    }
+
+    public String getResolvedQuery() {
+        return resolvedQuery;
+    }
+
+    public void setResolvedQuery(String resolvedQuery) {
+        this.resolvedQuery = resolvedQuery;
+    }
+
+    public String getAction() {
+        return action;
+    }
+
+    public void setAction(String action) {
+        this.action = action;
+    }
+
+    public boolean isActionIncomplete() {
+        return actionIncomplete;
+    }
+
+    public void setActionIncomplete(boolean actionIncomplete) {
+        this.actionIncomplete = actionIncomplete;
+    }
+
+    public List<ApiAiContext> getContexts() {
+        return contexts;
+    }
+
+    public void setContexts(List<ApiAiContext> contexts) {
+        this.contexts = contexts;
+    }
+
+    public ApiAiMetadata getMetadata() {
+        return metadata;
+    }
+
+    public void setMetadata(ApiAiMetadata metadata) {
+        this.metadata = metadata;
+    }
+
+    public ApiAiFulfillment getFulfillment() {
+        return fulfillment;
+    }
+
+    public void setFulfillment(ApiAiFulfillment fulfillment) {
+        this.fulfillment = fulfillment;
+    }
+
+    public double getScore() {
+        return score;
+    }
+
+    public void setScore(double score) {
+        this.score = score;
+    }
 }

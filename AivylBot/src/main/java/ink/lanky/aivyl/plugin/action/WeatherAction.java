@@ -18,6 +18,7 @@ package ink.lanky.aivyl.plugin.action;
 import ink.lanky.aivyl.controller.Action;
 import ink.lanky.aivyl.domain.Response;
 import ink.lanky.aivyl.util.APIConnection;
+import java.util.HashMap;
 
 /**
  *
@@ -28,7 +29,7 @@ public class WeatherAction extends Action {
     private APIConnection weatherAPIConnection;
 
     @Override
-    public Response execute(String sessionId, Object[] args) {
+    public Response execute(String sessionId, HashMap<String, Object> args) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 

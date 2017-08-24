@@ -20,7 +20,7 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import java.util.HashMap;
 
 @JsonIgnoreProperties(ignoreUnknown = true)
-class ApiAiContext {
+public class ApiAiContext {
     private String name;
     private int lifespan;
     private HashMap<String, Object> parameters;

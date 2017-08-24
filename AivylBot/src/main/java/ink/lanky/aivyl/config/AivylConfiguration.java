@@ -17,6 +17,7 @@ package ink.lanky.aivyl.config;
 
 import java.io.File;
 import java.util.HashMap;
+import org.apache.log4j.Logger;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.context.annotation.Configuration;
 
@@ -27,12 +28,15 @@ import org.springframework.context.annotation.Configuration;
 @Configuration
 @EnableConfigurationProperties(AivylProperties.class)
 public class AivylConfiguration {
-    AivylProperties properties;
+    private static final Logger LOGGER = Logger.getLogger(AivylConfiguration.class.getName());
+    
+    private AivylProperties properties;
     
     private HashMap<String, PluginConfiguration> plugins;
     
     public AivylConfiguration() throws Exception {
         super();
+        LOGGER.info("Loading plugins");
         File pluginDirectory = new File(properties.getBaseConfigURL() + "/plugins");
         for (File pluginFile : pluginDirectory.listFiles()) {
             PluginConfiguration tempConfig = PluginConfiguration.fromFile(pluginFile);

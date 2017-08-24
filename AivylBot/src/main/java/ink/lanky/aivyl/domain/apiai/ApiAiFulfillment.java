@@ -19,7 +19,7 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import java.util.List;
 
 @JsonIgnoreProperties(ignoreUnknown = true)
-class ApiAiFulfillment {
+public class ApiAiFulfillment {
     private String speech;
     private List<ApiAiMessage> messages;
 

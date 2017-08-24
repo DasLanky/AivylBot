@@ -15,47 +15,57 @@
  */
 package ink.lanky.aivyl.config;
 
+import ink.lanky.aivyl.controller.Action;
 import java.io.File;
 import java.util.HashMap;
 import java.util.Scanner;
+import org.apache.log4j.Logger;
 
 /**
  *
  * @author Gcube
  */
 public class PluginConfiguration {
+    
+    private static final Logger LOGGER = Logger.getLogger(PluginConfiguration.class.getName());
+    
     private String id;
-    private HashMap<String, String> actions;
+    private HashMap<String, Action> actions;
     private HashMap<String, String> properties;
     
     public static PluginConfiguration fromFile(File file) throws Exception {
+        LOGGER.info("Loading plugin from file: " + file.getName());
         PluginConfiguration tempConfig = new PluginConfiguration();
+        tempConfig.setId(file.getName().substring(0, file.getName().indexOf(".props")));
         HashMap<String, String> props = new HashMap();
-        HashMap<String, String> acts = new HashMap();
+        HashMap<String, Action> acts = new HashMap();
         Scanner s = new Scanner(file);
         String line = "";
         String[] split;
         while (s.hasNextLine()) {
             line = s.nextLine();
             if (line.equals("actions")) break;
-            split = line.split(":");
+            split = line.replaceAll(" ", "").split("=");
             props.put(split[0], split[1]);
         }
         while (s.hasNextLine()) {
             line = s.nextLine();
-            split = line.split(":");
-            acts.put(split[0], split[1]);
+            split = line.replaceAll(" ", "").split("=");
+            acts.put(split[0], 
+                    Class.forName(split[1])
+                            .asSubclass(Action.class)
+                            .newInstance());
         }
         tempConfig.setProperties(props);
         tempConfig.setActions(acts);
         return tempConfig;
     }
 
-    public HashMap<String, String> getActions() {
+    public HashMap<String, Action> getActions() {
         return actions;
     }
 
-    public void setActions(HashMap<String, String> actions) {
+    public void setActions(HashMap<String, Action> actions) {
         this.actions = actions;
     }
 
@@ -77,5 +87,9 @@ public class PluginConfiguration {
     
     public String getProperty(String name) {
         return properties.get(name);
+    }
+    
+    public Action getAction(String name) {
+        return actions.get(name);
     }
 }

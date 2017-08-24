@@ -33,5 +33,5 @@ public abstract class Action {
         return actionMap;
     }
     
-    public abstract Response execute(String sessionId, Object[] args);
+    public abstract Response execute(String sessionId, HashMap<String, Object> args);
 }

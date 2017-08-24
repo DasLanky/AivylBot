@@ -15,9 +15,46 @@
  */
 package rest;
 
+import ink.lanky.aivyl.config.AivylConfiguration;
+import ink.lanky.aivyl.controller.Action;
+import ink.lanky.aivyl.domain.Response;
+import ink.lanky.aivyl.domain.apiai.ApiAiPostBody;
+import org.apache.log4j.Logger;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.MediaType;
 import org.springframework.stereotype.Service;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
 
-@Service
+@RestController
+@RequestMapping("/api")
 public class AivylAPIResource {
+    
+    private static final Logger LOGGER = Logger.getLogger(AivylAPIResource.class.getName());
+    
+    @Autowired
+    private AivylConfiguration config;
+    
+    @RequestMapping(
+            value = "/post",
+            method = RequestMethod.POST,
+            produces = MediaType.APPLICATION_JSON_VALUE
+    )
+    public ResponseEntity<Response> handleApiAiRequest(
+            @RequestBody ApiAiPostBody body) {
+        if (body.getResult().isActionIncomplete()) {
+            return ResponseEntity.ok(null);
+        }
+        String intentName = body.getResult().getMetadata().getIntentName();
+        String actionName = body.getResult().getAction();
+        Action action = config.getPluginConfiguration(intentName)
+                                .getAction(actionName);
+        return ResponseEntity.ok(
+                action.execute(
+                        body.getSessionId(),
+                        body.getResult().getParameters()));
+    }
     
 }

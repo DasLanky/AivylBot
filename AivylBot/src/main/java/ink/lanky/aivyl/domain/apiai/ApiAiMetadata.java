@@ -18,7 +18,7 @@ package ink.lanky.aivyl.domain.apiai;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 @JsonIgnoreProperties(ignoreUnknown = true)
-class ApiAiMetadata {
+public class ApiAiMetadata {
     String intentId;
     String webhookUsed;
     String webhookForSlotFillingUsed;

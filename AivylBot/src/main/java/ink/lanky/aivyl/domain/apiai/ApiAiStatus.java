@@ -18,7 +18,7 @@ package ink.lanky.aivyl.domain.apiai;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 @JsonIgnoreProperties(ignoreUnknown = true)
-class ApiAiStatus {
+public class ApiAiStatus {
     private int code;
     private String errorType;
 
