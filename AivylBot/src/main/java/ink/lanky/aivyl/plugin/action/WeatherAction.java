@@ -68,7 +68,6 @@ public class WeatherAction extends Action {
         ApiAiResponse response = new ApiAiResponse();
         
         response.setSource("Aivyl (OpenWeatherMap Plugin)");
-        response.setSpeech("Here's the weather in " + args.get("geo-city") + ".");
         String date, city;
         
         city = args.get("geo-city").toString();
@@ -115,7 +114,7 @@ public class WeatherAction extends Action {
             }
             if (!weatherHistory.containsKey(cityCode + date)) {
                 LOGGER.fatal("Date out of range, should be within range of cached days");
-                throw new Exception("Date out of range: should be within 16 days");
+                throw new Exception("Date out of range: should be within cached days");
             }
         }
         WeatherReportDay report = weatherHistory.get(cityCode + date);
@@ -124,11 +123,16 @@ public class WeatherAction extends Action {
         displayTextBuilder.append("Wind: " + Float.toString(report.getWind().getSpeed()) + " mph at "
                                     + Integer.toString(report.getWind().getDeg()) + " degrees\n");
         displayTextBuilder.append("Temperature: "
-                                + Float.toString(report.getMain().getTemp()) + "F average, high of "
-                                + Float.toString(report.getMain().getTemp_max()) + "F and low of "
-                                + Float.toString(report.getMain().getTemp_min()) + "F\n");
+                                + Float.toString(report.getMain().getTemp() - 273) + "C average, high of "
+                                + Float.toString(report.getMain().getTemp_max() - 273) + "C and low of "
+                                + Float.toString(report.getMain().getTemp_min() - 273) + "C\n");
         
-        response.setDisplayText(displayTextBuilder.toString());
+        String displayText = displayTextBuilder.toString();
+        
+        response.setSpeech("Here's the weather in " + args.get("geo-city") + ": "
+                           + displayText);
+        
+        response.setDisplayText(displayText);
         
         response.setFollowupEvent(null);
         response.setData(null);
