@@ -73,7 +73,7 @@ public class WeatherAction extends Action {
         
         city = args.get("geo-city").toString();
         
-        if (args.get("date") == null) {
+        if (args.get("date") == null || args.get("date").equals("")) {
             date = dateFormat.format(Date.from(Instant.now()));
         }
         else {
