@@ -32,10 +32,8 @@ public class WeatherAuthenticator extends Authenticator {
     @Override
     public Properties getAuthParams() {
         Properties params = new Properties();
-        params.setProperty("APIKEY",
-                            config
-                                .getPluginConfiguration("weather")
-                                .getProperty("APIKEY"));
+        params.setProperty("APPID",
+                            config.getProperty("APIKEY"));
         return params;
     }
 

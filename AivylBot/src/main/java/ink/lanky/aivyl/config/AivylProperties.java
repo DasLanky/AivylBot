@@ -16,11 +16,15 @@
 package ink.lanky.aivyl.config;
 
 import org.springframework.boot.context.properties.ConfigurationProperties;
+import org.springframework.boot.context.properties.EnableConfigurationProperties;
+import org.springframework.context.annotation.Configuration;
 
 /**
  *
  * @author Gcube
  */
+@Configuration
+@EnableConfigurationProperties
 @ConfigurationProperties(prefix="server")
 public class AivylProperties {
     private String apiAiURL;

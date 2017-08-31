@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package rest;
+package ink.lanky.aivyl.rest;
 
 import ink.lanky.aivyl.config.AivylConfiguration;
 import ink.lanky.aivyl.controller.Action;
@@ -29,7 +29,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
-@RequestMapping("/api")
+@RequestMapping("api")
 public class AivylAPIResource {
     
     private static final Logger LOGGER = Logger.getLogger(AivylAPIResource.class.getName());
@@ -43,7 +43,8 @@ public class AivylAPIResource {
             produces = MediaType.APPLICATION_JSON_VALUE
     )
     public ResponseEntity<ApiAiResponse> handleApiAiRequest(
-            @RequestBody ApiAiPostBody body) {
+        @RequestBody ApiAiPostBody body) 
+        throws Exception {
         if (body.getResult().isActionIncomplete()) {
             return ResponseEntity.ok(null);
         }

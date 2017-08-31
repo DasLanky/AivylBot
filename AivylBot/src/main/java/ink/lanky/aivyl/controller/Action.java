@@ -15,14 +15,26 @@
  */
 package ink.lanky.aivyl.controller;
 
+import ink.lanky.aivyl.config.AivylConfiguration;
 import ink.lanky.aivyl.domain.ApiAiResponse;
 import java.util.HashMap;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 
 /**
  *
  * @author Gcube
  */
+@Component
 public abstract class Action {
+    
+    @Autowired
+    protected AivylConfiguration config;
+
+    public void setConfig(AivylConfiguration config) {
+        this.config = config;
+    }
+    
     private static HashMap<String, Action> actionMap;
     
     static {
@@ -33,5 +45,7 @@ public abstract class Action {
         return actionMap;
     }
     
-    public abstract ApiAiResponse execute(String sessionId, HashMap<String, Object> args);
+    public abstract ApiAiResponse execute(String sessionId, 
+                                          HashMap<String, Object> args)
+            throws Exception;
 }

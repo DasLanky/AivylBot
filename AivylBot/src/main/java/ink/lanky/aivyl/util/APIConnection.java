@@ -47,9 +47,20 @@ public class APIConnection {
     private String endpointURL;
     
     private boolean autoReset = false;
+
+    public Authenticator getAuthenticator() {
+        return authenticator;
+    }
+
+    public void setAuthenticator(Authenticator authenticator) {
+        this.authenticator = authenticator;
+    }
     
-    public APIConnection(String endpointURL, boolean shouldAutoRefresh) {
+    public APIConnection(String endpointURL, 
+                        Authenticator authenticator,
+                        boolean shouldAutoRefresh) {
         this.endpointURL = endpointURL;
+        this.authenticator = authenticator;
         this.autoReset = shouldAutoRefresh;
     }
     
@@ -108,16 +119,20 @@ public class APIConnection {
                             Properties params,
                             Class ReturnType)
             throws Exception {
-        LOGGER.info("AribaAPIConnection exchange: " + method.name());
+        LOGGER.info("APIConnection exchange: " + method.name());
 
         UriComponentsBuilder builder = UriComponentsBuilder
                                             .fromHttpUrl(
-                                                this.endpointURL + relativeLink);
+                                                this.endpointURL + "/" + relativeLink);
 
         if (params != null) {
             for (String propertyName : params.stringPropertyNames()) {
                 builder.queryParam(propertyName, params.getProperty(propertyName));
             }
+        }
+        Properties authParams = authenticator.getAuthParams();
+        for (String propertyName : authParams.stringPropertyNames()) {
+                builder.queryParam(propertyName, authParams.getProperty(propertyName));
         }
 
         String link = builder.toUriString();
@@ -132,6 +147,11 @@ public class APIConnection {
                 _headers.set(propertyName, headers.getProperty(propertyName));
             }
         }
+        Properties authHeaders = authenticator.getAuthHeaders();
+        for (String propertyName : authHeaders.stringPropertyNames()) {
+                _headers.set(propertyName, authHeaders.getProperty(propertyName));
+        }
+        
         _headers.setAccept(Arrays.asList(MediaType.APPLICATION_JSON));
 
         String body = "";

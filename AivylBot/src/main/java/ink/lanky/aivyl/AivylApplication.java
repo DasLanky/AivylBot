@@ -16,22 +16,36 @@
 package ink.lanky.aivyl;
 
 import ink.lanky.aivyl.config.AivylConfiguration;
+import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.SpringApplication;
+import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.context.annotation.Configuration;
 
 /**
  *
  * @author Gcube
  */
+
 @SpringBootApplication
+@Configuration
+@EnableAutoConfiguration
 public class AivylApplication {
+    
+    private static final Logger LOGGER = Logger.getLogger(AivylApplication.class.getName());
     
     @Autowired
     private AivylConfiguration config;
 
-	public static void main(String[] args) {
-		SpringApplication.run(AivylApplication.class, args);
-	}
+    public static void main(String[] args) {
+            SpringApplication.run(AivylApplication.class, args);
+    }
+    
+    @Autowired
+    public AivylApplication(AivylConfiguration config) {
+        this.config = config;
+        LOGGER.info("ApiAiURL: " + config.getProperties().getApiAiURL());
+    }
 
 }

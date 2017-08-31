@@ -13,26 +13,27 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package ink.lanky.aivyl.controller;
+package ink.lanky.aivyl.plugin.domain;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
-import ink.lanky.aivyl.config.AivylConfiguration;
-import ink.lanky.aivyl.config.PluginConfiguration;
-import java.util.Properties;
-import org.springframework.beans.factory.annotation.Autowired;
+@JsonIgnoreProperties(ignoreUnknown = true)
+public class WeatherReportWind {
+    private float speed;
+    private int deg;
 
-/**
- *
- * @author Gcube
- */
-public abstract class Authenticator {
-    
-    protected PluginConfiguration config;
-
-    public void setConfig(PluginConfiguration config) {
-        this.config = config;
+    public float getSpeed() {
+        return speed;
     }
-    
-    public abstract Properties getAuthHeaders();
-    public abstract Properties getAuthParams();
-    public abstract void reset();
+
+    public void setSpeed(float speed) {
+        this.speed = speed;
+    }
+
+    public int getDeg() {
+        return deg;
+    }
+
+    public void setDeg(int deg) {
+        this.deg = deg;
+    }
 }

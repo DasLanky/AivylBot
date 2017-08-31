@@ -33,7 +33,8 @@ public class PluginConfiguration {
     private HashMap<String, Action> actions;
     private HashMap<String, String> properties;
     
-    public static PluginConfiguration fromFile(File file) throws Exception {
+    public static PluginConfiguration fromFile(File file, AivylConfiguration config)
+            throws Exception {
         LOGGER.info("Loading plugin from file: " + file.getName());
         PluginConfiguration tempConfig = new PluginConfiguration();
         tempConfig.setId(file.getName().substring(0, file.getName().indexOf(".props")));
@@ -47,14 +48,18 @@ public class PluginConfiguration {
             if (line.equals("actions")) break;
             split = line.replaceAll(" ", "").split("=");
             props.put(split[0], split[1]);
+            LOGGER.info(split[0] + ": " + split[1]);
         }
+        LOGGER.info("Loading actions for plugin " + file.getName());
         while (s.hasNextLine()) {
             line = s.nextLine();
             split = line.replaceAll(" ", "").split("=");
-            acts.put(split[0], 
-                    Class.forName(split[1])
+            Action tempAction = Class.forName(split[1])
                             .asSubclass(Action.class)
-                            .newInstance());
+                            .newInstance();
+            tempAction.setConfig(config);
+            acts.put(split[0], tempAction);
+            LOGGER.info(split[0] + ": " + split[1]);
         }
         tempConfig.setProperties(props);
         tempConfig.setActions(acts);

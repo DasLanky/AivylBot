@@ -1,5 +1,5 @@
 APIKEY = 6d4f0f00d62497cbecb0a758d98ca516
-baseURL = http://openweathermap.org/api/2.5
+baseURL = http://api.openweathermap.org/data/2.5
 weatherRelativeURL = weather
 actions
 weather.forecast = ink.lanky.aivyl.plugin.action.WeatherAction
