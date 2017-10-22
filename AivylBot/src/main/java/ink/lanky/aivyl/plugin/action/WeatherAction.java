@@ -23,6 +23,7 @@ import ink.lanky.aivyl.domain.apiai.*;
 import ink.lanky.aivyl.plugin.auth.WeatherAuthenticator;
 import ink.lanky.aivyl.plugin.domain.*;
 import ink.lanky.aivyl.util.APIConnection;
+import java.text.DecimalFormat;
 import java.text.SimpleDateFormat;
 import java.time.Instant;
 import java.util.Calendar;
@@ -41,6 +42,9 @@ public class WeatherAction extends Action {
     
     @Transient
     private static SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+    
+    @Transient
+    private static DecimalFormat numberFormat = new DecimalFormat("####.00");
     
     private PluginConfiguration weatherConfig = null;
     
@@ -120,17 +124,16 @@ public class WeatherAction extends Action {
         WeatherReportDay report = weatherHistory.get(cityCode + date);
         
         displayTextBuilder.append("Skies: " + report.getWeather().get(0).getMain() + "\n");
-        displayTextBuilder.append("Wind: " + Float.toString(report.getWind().getSpeed()) + " mph at "
+        displayTextBuilder.append("Wind: " + numberFormat.format(report.getWind().getSpeed()) + " mph at "
                                     + Integer.toString(report.getWind().getDeg()) + " degrees\n");
         displayTextBuilder.append("Temperature: "
-                                + Float.toString(report.getMain().getTemp() - 273) + "C average, high of "
-                                + Float.toString(report.getMain().getTemp_max() - 273) + "C and low of "
-                                + Float.toString(report.getMain().getTemp_min() - 273) + "C\n");
+                                + numberFormat.format(report.getMain().getTemp() - 273) + "C average, high of "
+                                + numberFormat.format(report.getMain().getTemp_max() - 273) + "C and low of "
+                                + numberFormat.format(report.getMain().getTemp_min() - 273) + "C\n");
         
         String displayText = displayTextBuilder.toString();
         
-        response.setSpeech("Here's the weather in " + args.get("geo-city") + ": "
-                           + displayText);
+        response.setSpeech(displayText);
         
         response.setDisplayText(displayText);
         
