@@ -20,7 +20,9 @@ import ink.lanky.aivyl.controller.Action;
 import ink.lanky.aivyl.domain.ApiAiResponse;
 import ink.lanky.aivyl.domain.apiai.ApiAiPostBody;
 import io.swagger.annotations.Api;
-import org.apache.log4j.Logger;
+import io.swagger.annotations.ApiOperation;
+import io.swagger.annotations.ApiResponse;
+import io.swagger.annotations.ApiResponses;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.stereotype.Service;
@@ -28,10 +30,11 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.apache.log4j.Logger;
 
 @RestController
 @RequestMapping("api")
-@Api ("Endpoint for fulfillment of API.AI requests")
+@Api (value="Aivyl", description="API.AI")
 public class AivylAPIResource {
     
     private static final Logger LOGGER = Logger.getLogger(AivylAPIResource.class.getName());
@@ -39,6 +42,15 @@ public class AivylAPIResource {
     @Autowired
     private AivylConfiguration config;
     
+    @ApiOperation(value = "Query for parsed voice input and intent", response = ApiAiResponse.class)
+    @ApiResponses(value = {
+            @ApiResponse(code = 200, message = "Successful"),
+            @ApiResponse(code = 401, message = "Resource access unauthorized"),
+            @ApiResponse(code = 403, message = "Resource access forbidden"),
+            @ApiResponse(code = 404, message = "Resource not found"),
+            @ApiResponse(code = 500, message = "Request handling unsuccessful")
+    }
+    )
     @RequestMapping(
             value = "/input",
             method = RequestMethod.POST,
