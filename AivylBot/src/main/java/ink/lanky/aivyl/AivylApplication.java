@@ -16,6 +16,9 @@
 package ink.lanky.aivyl;
 
 import ink.lanky.aivyl.config.AivylConfiguration;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.util.Scanner;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.SpringApplication;
@@ -38,14 +41,22 @@ public class AivylApplication {
     @Autowired
     private AivylConfiguration config;
 
-    public static void main(String[] args) {
-            SpringApplication.run(AivylApplication.class, args);
+    public static void main(String[] args) throws Exception {
+        SpringApplication.run(AivylApplication.class, args);
+    }
+    
+    public void printHeaderText() throws FileNotFoundException {
+        Scanner s = new Scanner(new File(this.config.getProperties().getBaseConfigURL() + "src/main/resources/aivyl.txt"));
+        while (s.hasNextLine()) {
+            System.out.println(s.nextLine());
+        }
+        s.close();
     }
     
     @Autowired
-    public AivylApplication(AivylConfiguration config) {
+    public AivylApplication(AivylConfiguration config) throws FileNotFoundException {
         this.config = config;
-        LOGGER.info("ApiAiURL: " + config.getProperties().getApiAiURL());
+        this.printHeaderText();
     }
 
 }

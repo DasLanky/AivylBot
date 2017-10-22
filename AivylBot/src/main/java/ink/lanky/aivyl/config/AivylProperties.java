@@ -27,8 +27,7 @@ import org.springframework.context.annotation.Configuration;
 @EnableConfigurationProperties
 @ConfigurationProperties(prefix="server")
 public class AivylProperties {
-    private String apiAiURL;
-    private String apiAiKey;
+    private int apiPort;
     private String baseConfigURL;
 
     public String getBaseConfigURL() {
@@ -39,20 +38,12 @@ public class AivylProperties {
         this.baseConfigURL = baseConfigURL;
     }
 
-    public String getApiAiURL() {
-        return apiAiURL;
+    public int getApiPort() {
+        return apiPort;
     }
 
-    public void setApiAiURL(String apiAiURL) {
-        this.apiAiURL = apiAiURL;
-    }
-
-    public String getApiAiKey() {
-        return apiAiKey;
-    }
-
-    public void setApiAiKey(String apiAiKey) {
-        this.apiAiKey = apiAiKey;
+    public void setApiPort(int apiPort) {
+        this.apiPort = apiPort;
     }
     
 }

@@ -2,21 +2,8 @@ spring:
     profiles:
         active: dev
 ---
-server:
-    apiAiURL: http://httpbin.org/post
-    apiAiKey: whocares
-    baseConfigURL: src/main/resources
----
 spring:
     profiles: dev
 server:
-    apiAiURL: http://httpbin.org/post
-    apiAiKey: whocares
-    baseConfigURL: src/main/resources
----
-spring:
-    profiles: prod
-server:
-    apiAiURL: http://httpbin.org/post
-    apiAiKey: whocares
+    apiPort: 24895
     baseConfigURL: src/main/resources
