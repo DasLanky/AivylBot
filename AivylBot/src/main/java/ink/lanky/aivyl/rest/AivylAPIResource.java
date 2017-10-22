@@ -19,6 +19,7 @@ import ink.lanky.aivyl.config.AivylConfiguration;
 import ink.lanky.aivyl.controller.Action;
 import ink.lanky.aivyl.domain.ApiAiResponse;
 import ink.lanky.aivyl.domain.apiai.ApiAiPostBody;
+import io.swagger.annotations.Api;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
@@ -30,6 +31,7 @@ import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("api")
+@Api ("Endpoint for fulfillment of API.AI requests")
 public class AivylAPIResource {
     
     private static final Logger LOGGER = Logger.getLogger(AivylAPIResource.class.getName());
@@ -38,7 +40,7 @@ public class AivylAPIResource {
     private AivylConfiguration config;
     
     @RequestMapping(
-            value = "/post",
+            value = "/input",
             method = RequestMethod.POST,
             produces = MediaType.APPLICATION_JSON_VALUE
     )
@@ -64,5 +66,4 @@ public class AivylAPIResource {
                         body.getSessionId(),
                         body.getResult().getParameters()));
     }
-    
 }
