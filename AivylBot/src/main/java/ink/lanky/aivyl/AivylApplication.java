@@ -46,7 +46,7 @@ public class AivylApplication {
     }
     
     public void printHeaderText() throws FileNotFoundException {
-        Scanner s = new Scanner(new File(this.config.getProperties().getBaseConfigURL() + "src/main/resources/aivyl.txt"));
+        Scanner s = new Scanner(new File(this.config.getProperties().getBaseConfigURL() + "/aivyl.txt"));
         while (s.hasNextLine()) {
             System.out.println(s.nextLine());
         }
@@ -57,6 +57,7 @@ public class AivylApplication {
     public AivylApplication(AivylConfiguration config) throws FileNotFoundException {
         this.config = config;
         this.printHeaderText();
+        LOGGER.info("Configuration complete");
     }
 
 }
