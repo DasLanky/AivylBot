@@ -53,6 +53,11 @@ public class WeatherAction extends Action {
     private HashMap<String, WeatherReportDay> weatherHistory;
     
     private WeatherAuthenticator authenticator = new WeatherAuthenticator();
+    
+    @Autowired
+    public WeatherAction(AivylConfiguration config) {
+        super(config);
+    }
 
     @Override
     public ApiAiResponse execute(String sessionId, HashMap<String, Object> args) 

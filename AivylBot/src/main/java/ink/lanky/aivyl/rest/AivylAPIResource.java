@@ -65,8 +65,7 @@ public class AivylAPIResource {
         String actionName = body.getResult().getAction();
         Action action;
         if (actionName.contains(".")) {
-            action = config.getPluginConfiguration(
-                                    actionName.substring(0, actionName.indexOf('.')))
+            action = config.getPluginConfiguration(actionName.substring(0, actionName.indexOf('.')))
                                 .getAction(actionName);
         }
         else {

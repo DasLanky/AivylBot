@@ -30,8 +30,8 @@ public abstract class Action {
     
     @Autowired
     protected AivylConfiguration config;
-
-    public void setConfig(AivylConfiguration config) {
+    
+    public Action(AivylConfiguration config) {
         this.config = config;
     }
     

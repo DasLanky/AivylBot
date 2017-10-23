@@ -17,9 +17,12 @@ package ink.lanky.aivyl.config;
 
 import ink.lanky.aivyl.controller.Action;
 import java.io.File;
+import java.io.IOException;
+import java.nio.file.Path;
 import java.util.HashMap;
 import java.util.Scanner;
 import org.apache.log4j.Logger;
+import org.springframework.context.ApplicationContext;
 
 /**
  *
@@ -33,11 +36,12 @@ public class PluginConfiguration {
     private HashMap<String, Action> actions;
     private HashMap<String, String> properties;
     
-    public static PluginConfiguration fromFile(File file, AivylConfiguration config)
-            throws Exception {
-        LOGGER.info("Loading plugin from file: " + file.getName());
+    public static PluginConfiguration fromFile(Path file, AivylConfiguration config)
+            throws IOException {
+        LOGGER.info("Loading plugin from file: " + file.toString());
         PluginConfiguration tempConfig = new PluginConfiguration();
-        tempConfig.setId(file.getName().substring(0, file.getName().indexOf(".props")));
+        String fname = file.getFileName().toString();
+        tempConfig.setId(fname.substring(0, fname.indexOf(".props")));
         HashMap<String, String> props = new HashMap();
         HashMap<String, Action> acts = new HashMap();
         Scanner s = new Scanner(file);
@@ -50,15 +54,27 @@ public class PluginConfiguration {
             props.put(split[0], split[1]);
             LOGGER.info(split[0] + ": " + split[1]);
         }
-        LOGGER.info("Loading actions for plugin " + file.getName());
+        LOGGER.info("Loading actions for plugin " + file.toString());
         while (s.hasNextLine()) {
             line = s.nextLine();
             split = line.replaceAll(" ", "").split("=");
-            Action tempAction = Class.forName(split[1])
-                            .asSubclass(Action.class)
-                            .newInstance();
-            tempAction.setConfig(config);
-            acts.put(split[0], tempAction);
+            try {
+//                Action tempAction = Class.forName(split[1])
+//                                .asSubclass(Action.class)
+//                                .newInstance();
+                Action tempAction = PluginConfiguration
+                                            .class
+                                            .getClassLoader()
+                                            .loadClass(split[1])
+                                            .asSubclass(Action.class)
+                                            .getConstructor(AivylConfiguration.class)
+                                            .newInstance(config);
+                acts.put(split[0], tempAction);
+            }
+            catch (Exception e) {
+                LOGGER.fatal("Plugin class not found");
+                e.printStackTrace();
+            }
             LOGGER.info(split[0] + ": " + split[1]);
         }
         tempConfig.setProperties(props);

@@ -16,8 +16,10 @@
 package ink.lanky.aivyl.config;
 
 import java.io.File;
+import java.io.IOException;
 import java.net.URI;
 import java.nio.file.*;
+import java.nio.file.attribute.BasicFileAttributes;
 import java.util.*;
 import java.util.stream.Stream;
 import org.apache.log4j.Logger;
@@ -44,20 +46,30 @@ public class AivylConfiguration {
         this.properties = properties;
         this.plugins = new HashMap();
         LOGGER.info("Loading plugins");
-        URI pluginURI = AivylConfiguration.class.getResource("/plugins/").toURI();
-        Path pluginPath;
-        if (pluginURI.getScheme().equals("jar")) {
-            pluginPath = FileSystems
-                            .newFileSystem(pluginURI, Collections.<String, Object>emptyMap())
-                            .getPath("/plugins/");
-        }
-        else {
-            pluginPath = Paths.get(pluginURI);
-        }
-        File pluginDirectory = Files.walk(pluginPath,1).iterator().next().toFile();
+        /*
+        File pluginDirectory = new File(AivylConfiguration.class.getResource("/plugins").toURI());
         for (File pluginFile : pluginDirectory.listFiles()) {
             PluginConfiguration tempConfig = PluginConfiguration.fromFile(pluginFile, this);
             plugins.put(tempConfig.getId(), tempConfig);
+        }
+        */
+        URI pluginURI = AivylConfiguration.class.getResource("/plugins").toURI();
+        try (FileSystem fileSystem = (pluginURI.getScheme().equals("jar")
+                                        ? FileSystems.newFileSystem(pluginURI, Collections.<String, Object>emptyMap())
+                                        : null)) {
+            Path pluginPath = Paths.get(pluginURI);
+            List<Path> paths = new ArrayList();
+            Files.walkFileTree(pluginPath, new SimpleFileVisitor<Path>() { 
+                @Override
+                public FileVisitResult visitFile(Path pluginFile, BasicFileAttributes attrs) throws IOException {
+                    paths.add(pluginFile);
+                    return FileVisitResult.CONTINUE;
+                }
+            });
+            for (Path pluginFile : paths) {
+                PluginConfiguration tempConfig = PluginConfiguration.fromFile(pluginFile, this);
+                plugins.put(tempConfig.getId(), tempConfig);
+            }
         }
     }
 
