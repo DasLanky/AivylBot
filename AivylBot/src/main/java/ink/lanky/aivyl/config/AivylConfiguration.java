@@ -16,7 +16,10 @@
 package ink.lanky.aivyl.config;
 
 import java.io.File;
-import java.util.HashMap;
+import java.net.URI;
+import java.nio.file.*;
+import java.util.*;
+import java.util.stream.Stream;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
@@ -41,10 +44,17 @@ public class AivylConfiguration {
         this.properties = properties;
         this.plugins = new HashMap();
         LOGGER.info("Loading plugins");
-        File pluginDirectory = new File(AivylConfiguration
-                                            .class
-                                            .getResource("/plugins")
-                                            .toURI());
+        URI pluginURI = AivylConfiguration.class.getResource("/plugins/").toURI();
+        Path pluginPath;
+        if (pluginURI.getScheme().equals("jar")) {
+            pluginPath = FileSystems
+                            .newFileSystem(pluginURI, Collections.<String, Object>emptyMap())
+                            .getPath("/plugins/");
+        }
+        else {
+            pluginPath = Paths.get(pluginURI);
+        }
+        File pluginDirectory = Files.walk(pluginPath,1).iterator().next().toFile();
         for (File pluginFile : pluginDirectory.listFiles()) {
             PluginConfiguration tempConfig = PluginConfiguration.fromFile(pluginFile, this);
             plugins.put(tempConfig.getId(), tempConfig);
