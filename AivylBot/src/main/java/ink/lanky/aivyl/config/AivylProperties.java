@@ -28,15 +28,6 @@ import org.springframework.context.annotation.Configuration;
 @ConfigurationProperties(prefix="server")
 public class AivylProperties {
     private int apiPort;
-    private String baseConfigURL;
-
-    public String getBaseConfigURL() {
-        return baseConfigURL;
-    }
-
-    public void setBaseConfigURL(String baseConfigURL) {
-        this.baseConfigURL = baseConfigURL;
-    }
 
     public int getApiPort() {
         return apiPort;

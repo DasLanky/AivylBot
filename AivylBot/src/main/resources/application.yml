@@ -6,4 +6,3 @@ spring:
     profiles: dev
 server:
     apiPort: 24895
-    baseConfigURL: src/main/resources

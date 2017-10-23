@@ -41,7 +41,10 @@ public class AivylConfiguration {
         this.properties = properties;
         this.plugins = new HashMap();
         LOGGER.info("Loading plugins");
-        File pluginDirectory = new File(properties.getBaseConfigURL() + "/plugins");
+        File pluginDirectory = new File(AivylConfiguration
+                                            .class
+                                            .getResource("/plugins")
+                                            .toURI());
         for (File pluginFile : pluginDirectory.listFiles()) {
             PluginConfiguration tempConfig = PluginConfiguration.fromFile(pluginFile, this);
             plugins.put(tempConfig.getId(), tempConfig);
