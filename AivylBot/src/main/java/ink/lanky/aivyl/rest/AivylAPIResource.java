@@ -18,7 +18,7 @@ package ink.lanky.aivyl.rest;
 import ink.lanky.aivyl.config.AivylConfiguration;
 import ink.lanky.aivyl.controller.Action;
 import ink.lanky.aivyl.domain.ApiAiResponse;
-import ink.lanky.aivyl.domain.apiai.ApiAiPostBody;
+import ink.lanky.aivyl.domain.ApiAiPostBody;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiResponse;

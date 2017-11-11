@@ -15,42 +15,35 @@
  */
 package ink.lanky.aivyl.domain;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-import java.util.HashMap;
 
 @JsonIgnoreProperties(ignoreUnknown = true)
-public class ApiAiContext {
-    private String name;
-    private int lifespan;
-    private HashMap<String, Object> parameters;
+public class ApiAiMessage {
+    private int type;
+    private String platform;
+    private String speech;
 
-    public String getName() {
-        return name;
+    public int getType() {
+        return type;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public void setType(int type) {
+        this.type = type;
     }
 
-    public int getLifespan() {
-        return lifespan;
+    public String getPlatform() {
+        return platform;
     }
 
-    public void setLifespan(int lifespan) {
-        this.lifespan = lifespan;
+    public void setPlatform(String platform) {
+        this.platform = platform;
     }
 
-    public HashMap<String, Object> getParameters() {
-        return parameters;
+    public String getSpeech() {
+        return speech;
     }
 
-    public void setParameters(HashMap<String, Object> parameters) {
-        this.parameters = parameters;
-    }
-    
-    @JsonIgnore
-    public Object getParameter(String name) {
-        return parameters.get(name);
+    public void setSpeech(String speech) {
+        this.speech = speech;
     }
 }
