@@ -53,7 +53,7 @@ public class AivylConfiguration {
             plugins.put(tempConfig.getId(), tempConfig);
         }
         */
-        URI pluginURI = AivylConfiguration.class.getClassLoader().getResource("/plugins").toURI();
+        URI pluginURI = AivylConfiguration.class.getResource("/plugins").toURI();
         try (FileSystem fileSystem = (pluginURI.getScheme().equals("jar")
                                         ? FileSystems.newFileSystem(pluginURI, Collections.<String, Object>emptyMap())
                                         : null)) {
