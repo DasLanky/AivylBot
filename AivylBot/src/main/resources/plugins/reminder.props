@@ -1,0 +1,5 @@
+APIKEY = 
+actions
+reminder.set = ink.lanky.aivyl.plugin.action.reminder.ReminderSetAction
+reminder.get = ink.lanky.aivyl.plugin.action.reminder.ReminderGetAction
+reminder.del = ink.lanky.aivyl.plugin.action.reminder.ReminderDelAction
